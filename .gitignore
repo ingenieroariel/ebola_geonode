@@ -1,0 +1,4 @@
+*.pyc
+ebolageonode.egg-info/
+local_settings.py
+development.db

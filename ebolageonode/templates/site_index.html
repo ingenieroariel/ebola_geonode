@@ -1,0 +1,70 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load base_tags %}
+
+{% block title %} {% trans "Welcome!" %} - {{ block.super }} {% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block middle %}
+  {% block hero %}
+  <div class="jumbotron">
+	<div class="container2">
+    	<h1>{% trans "Welcome to Ebola GeoNode" %}</h1>
+	<div class="intro">
+          {% blocktrans %}
+<p>
+This is a partnership platform for sharing geospatial data, analysis and maps related to the Ebola emergency response. The platform is intended to minimize the time that GIS analysts spend locating up-to-date data. Users are able to make maps on the fly, view metadata, and access the reports behind GIS layers. Curators are working to ensure that the layers are recent, clean, useful, and legally and technically open. 
+          {% endblocktrans %}
+</p><p>
+          {% blocktrans %}
+<a href='https://groups.google.com/forum/#!forum/ebola-geonode-users'>Request to Join the Mailing List</a>
+          {% endblocktrans %}
+</p><p>
+          {% blocktrans %}
+Access to the website can be obtained via email: <a href='mailto:ebolageonode@gmail.com?subject=Ebola GeoNode - Access Request'>Request Access</a> 
+          {% endblocktrans %}
+        </p>
+        <span>{% trans 'Need help' %} <a href="http://docs.geonode.org/en/latest/tutorials/users/quickstart/index.html">{% trans 'Getting Started?' %}</a></span>
+	</div>
+	</div>
+  </div>
+  {% endblock %}
+
+{% block mainbody %}
+  <div class="container">
+    <div class="row">
+    {% with facet_type='home' %}
+     {% facets as facets %}
+      <div class="col-md-4">
+        <p class="text-center"><i class="fa fa-square-o fa-5x rotate-45"></i></p>
+        <h2 class="text-center">{{ facets.layer|default:_("No") }} {% trans "Layer" %}{{ facets.layer|pluralize }}</h2>
+
+        <p class="text-center">{% trans "Click to search for geospatial data published by other users, organizations and public sources. Download data in standard formats." %}</p> 
+        <p class="text-center"><a class="btn btn-default" href="{% url "layer_browse" %}" role="button">{% trans "Explore Layers" %} &raquo;</a></p>
+      </div>
+      <div class="col-md-4">
+        <p class="text-center"><i class="fa fa-map-marker fa-5x"></i></p>
+        <h2 class="text-center">{{ facets.map|default:_("No") }} {% trans "Map" %}{{ facets.map|pluralize }}</h2>
+        <p class="text-center">{% trans "Data is available for browsing, aggregating and styling to generate maps which can be shared publicly or restricted to specific users only." %}</p>
+        <p class="text-center"><a class="btn btn-default" href="{% url "maps_browse" %}" role="button">{% trans "Create maps" %} &raquo;</a></p>
+      </div>
+      <div class="col-md-4">
+        <p class="text-center"><i class="fa fa-cloud-upload fa-5x"></i></p>
+        <h2 class="text-center">{{ facets.user|default:_("No") }} {% trans "User" %}{{ facets.user|pluralize }}</h2>
+        <p class="text-center">{% trans "GeoNode allows registered users to easily upload geospatial data in several formats including shapefile and GeoTiff." %}</p>
+        <p class="text-center"><a class="btn btn-default" href="{% url "layer_upload" %}" role="button">{% trans "Share data" %} &raquo;</a></p>
+      </div>
+    {% endwith %}
+    </div>
+  </div>
+  {% verbatim %}
+  <div ng-app="featured">
+    <div ng-repeat="item in featured">
+      <!--{{ item.title }}-->
+    </div>
+  </div>
+  {% endverbatim %}
+  {% endblock %}
+{% endblock %}

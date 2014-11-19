@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extra_head %}
+      <link href="{{ STATIC_URL }}css/site_base.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block footer %}
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+	<div class="col-md-6">
+         <a href="http://www.redcross.org/"><img src="{{ STATIC_URL }}img/arc.png" alt="ARC" /></a>
+         <a href="https://www.worldbank.org/"><img src="{{ STATIC_URL }}img/wb-banner.png"  alt="World Bank" /></a>
+         <a href="https://www.gfdrr.org/"><img src="{{ STATIC_URL }}img/gfdrr.png"  alt="GFDRR" /></a>
+         <a href="https://hiu.state.gov/Pages/Home.aspx"><img src="{{ STATIC_URL }}img/hiu.jpg"  alt="HIU" /></a>
+         <a href="http://www.un.org/ebolaresponse/mission.shtml"><img src="{{ STATIC_URL }}img/unmeer.png"  alt="UNMEER" /></a>
+	</div>
+	<div class="col-md-4">
+            {% trans "Powered by" %} <a href="http://geonode.org">{% trans "GeoNode" %}</a> <em>{% trans "version" %} {{ VERSION }}</em> |
+            <a href="{% url "developer" %}">{% trans "Developers" %}</a> |
+            <a href="{% url "about" %}">{% trans "About" %}</a>
+	</div>
+	<div class="col-md-2">
+            <label class="hidden">{% trans "Language" %}</label>
+            {% if csrf_token != "NOTPROVIDED" %}
+            {% get_current_language as LANGUAGE %}
+            <form class="form-inline" action="/i18n/setlang/" method="post">
+            {% csrf_token %}
+              <select class="pull-right" name="language" onchange="javascript:form.submit()">
+                {% for lang in LANGUAGES %}
+                <option value="{{ lang.0 }}" {% ifequal LANGUAGE_CODE lang.0 %} selected="selected"{% endifequal %}>
+                  {{ lang.1 }}
+                </option>
+                {% endfor %}
+              </select>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </footer>
+{% endblock footer %}
