@@ -40,6 +40,9 @@ try:
 except ImportError:
     pass
 
+# Set time zone to Africa/Accra regardless of what is defined on local settings.
+TIME_ZONE = "Africa/Accra"
+
 # Additional directories which hold static files
 STATICFILES_DIRS.append(
     os.path.join(LOCAL_ROOT, "static"),
